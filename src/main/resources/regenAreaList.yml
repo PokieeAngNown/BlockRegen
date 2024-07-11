@@ -1,0 +1,11 @@
+Area1:
+  ##Type world name
+  World: world
+  ##Type first location like [X,Y,Z]
+  Loc1: [1,1,1]
+  ##Type second location like [X,Y,Z]
+  Loc2: [100,100,100]
+  ##Type the ore you need to regen
+  RegenOre:
+    - Ore1
+    - Ore2
