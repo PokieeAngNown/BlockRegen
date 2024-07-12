@@ -4,3 +4,7 @@ main: cn.saltedfish.oreregen.OreRegen
 api-version: '1.20'
 description: This plugin allows for the regeneration of ore after it has been mined.
 authors: [Pokiee]
+website: https://github.com/PokieeAngNown/OreRegen
+commands:
+  oreregen:
+    description: Main command in this plugin.

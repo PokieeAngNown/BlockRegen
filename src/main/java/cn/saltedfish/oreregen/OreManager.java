@@ -24,7 +24,7 @@ public class OreManager {
         return new ArrayList<>(keys);
     }
 
-    public static @NotNull List<Material> getOreMaterials(String oreName) {
+    public static @NotNull List<Material> getOreMaterialList(String oreName) {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenOreListFile());
         List<String> list = cfg.getStringList(oreName + ".Material");
         List<Material> materials = new ArrayList<>();

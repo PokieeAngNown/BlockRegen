@@ -1,0 +1,15 @@
+## [Time Setting]
+##When ore turn into bedrock
+##The time will start count
+##After time goes by
+##The ore will be regen in first material
+##Unit: second
+##Min: 1s
+##Don't set time too small
+##It will consume your server's memory
+
+##The last ore in list regen time
+DeepOreRegenTime: 10
+##The ore in list beside the first one regen time
+##This setting ensures that the area is not entirely filled with ore in middle of ist
+MiddleOreRegenTime: 30

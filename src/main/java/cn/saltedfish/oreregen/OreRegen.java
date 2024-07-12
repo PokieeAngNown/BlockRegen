@@ -1,24 +1,31 @@
 package cn.saltedfish.oreregen;
 
+import cn.saltedfish.oreregen.Commands.OreRegenCommand;
+import cn.saltedfish.oreregen.Listeners.PlayerEventsListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public final class OreRegen extends JavaPlugin {
+
+    public static boolean isReload = false;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
 
         //Info the plugin
-        this.getLogger().info("OreRegen plugin is enabled");
-        this.getLogger().info("Here is the plugin's information");
-        this.getLogger().info("> Name:" + name);
-        this.getLogger().info("> Version:" + version);
-        this.getLogger().info("> Authors:" + authors);
+        if (!isReload){
+            this.getLogger().info("OreRegen plugin is enabled");
+            this.getLogger().info("Here is the plugin's information");
+            this.getLogger().info("> Name:" + name);
+            this.getLogger().info("> Version:" + version);
+            this.getLogger().info("> Authors:" + authors);
+        }
 
         //Register
         regCommands();
@@ -28,18 +35,19 @@ public final class OreRegen extends JavaPlugin {
         //Initialize resource in pack
         initializeResource();
 
-
-        AreaManager.createJsonFile("Area1");
+        AreaManager.writeInformation("Area1");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        this.getLogger().info("OreRegen plugin is disabled");
     }
 
     @Override
     public void onLoad(){
         //Plugin loaded logic
+        this.getLogger().info("OreRegen plugin is loaded");
     }
 
     /*
@@ -53,20 +61,15 @@ public final class OreRegen extends JavaPlugin {
         [Reg]
      */
     private void regCommands(){
-
+        Objects.requireNonNull(this.getCommand("oreregen")).setExecutor(new OreRegenCommand());
     }
 
     private void regTabs(){
-
+        Objects.requireNonNull(this.getCommand("oreregen")).setTabCompleter(new OreRegenCommand());
     }
 
     private void regListeners(){
-
-    }
-
-    public void reloadPlugin(){
-        Bukkit.getPluginManager().disablePlugin(this);
-        Bukkit.getPluginManager().enablePlugin(this);
+        Bukkit.getPluginManager().registerEvents(new PlayerEventsListener(), this);
     }
 
     /*
@@ -107,4 +110,6 @@ public final class OreRegen extends JavaPlugin {
     public static Plugin getPlugin(){
         return Bukkit.getPluginManager().getPlugin("OreRegen");
     }
+
+
 }

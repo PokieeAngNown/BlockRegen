@@ -1,20 +1,18 @@
 package cn.saltedfish.oreregen;
 
+import cn.saltedfish.oreregen.Data.JsonFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +23,7 @@ public class AreaManager {
         return regenAreaListFile;
     }
 
-    public List<String> getRegenAreaList() {
+    public static @NotNull List<String> getRegenAreaList() {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
         Set<String> keys = cfg.getKeys(false);
         return new ArrayList<>(keys);
@@ -75,10 +73,9 @@ public class AreaManager {
         cfg.set(areaName + ".RegenOre", regenOreList);
     }
 
-    public static void createJsonFile(String areaName){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".yml");
-        JSONObject tag = new JSONObject();
-        JSONObject contents = new JSONObject();
+    public static void writeInformation(String areaName){
+
+        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
 
         Location loc1 = getAreaLoc1(areaName);
         Location loc2 = getAreaLoc2(areaName);
@@ -90,30 +87,38 @@ public class AreaManager {
         int maxY = Math.max(loc1.getBlockY(), loc2.getBlockY());
         int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
 
+        int a = 0;
         World world = getAreaWorld(areaName);
+
+        Material material;
+        List<Material> materialList;
 
         for (int x = minX; x <= maxX; x++){
             for (int y = minY; y <= maxY; y++){
                 for (int z = minZ; z <= maxZ; z++){
                     for (int i = 0; i < getAreaRegenOreList(areaName).size(); i++) {
-                        if (OreManager.getOreMaterials(getAreaRegenOreList(areaName).get(i)).get(0) == world.getBlockAt(x, y, z).getType()){
-                            contents.put("Location", Arrays.asList(x, y, z));
-                            contents.put("RegenOreType", getAreaRegenOreList(areaName).get(i));
-                            tag.put(i, contents);
+                        if (OreManager.getOreMaterialList(getAreaRegenOreList(areaName).get(i)).get(0) == world.getBlockAt(x, y, z).getType()){
+
+                            if (!file.exists()){
+                                try {
+                                    file.createNewFile();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+
+                            material = world.getBlockAt(x, y, z).getType();
+                            materialList = OreManager.getOreMaterialList(getAreaRegenOreList(areaName).get(i));
+
+                            JsonFileManager.setRegenOreType(areaName, String.valueOf(a), getAreaRegenOreList(areaName).get(i));
+                            JsonFileManager.setLocation(areaName, String.valueOf(a), new Location(world, x, y, z));
+                            JsonFileManager.setMaterial(areaName, String.valueOf(a), material);
+                            JsonFileManager.setMaterialList(areaName, String.valueOf(a), materialList);
+                            a++;
                         }
                     }
                 }
             }
-        }
-
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add(tag);
-
-        try (FileWriter fileWriter = new FileWriter(OreRegen.getPlugin().getDataFolder() + "/data/" + areaName + ".json")){
-            fileWriter.write(jsonArray.toJSONString());
-            fileWriter.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

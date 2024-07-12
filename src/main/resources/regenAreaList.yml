@@ -4,7 +4,7 @@ Area1:
   ##Type first location like [X,Y,Z]
   Loc1: [1,1,1]
   ##Type second location like [X,Y,Z]
-  Loc2: [100,100,100]
+  Loc2: [10,10,10]
   ##Type the ore you need to regen
   RegenOre:
     - Ore1

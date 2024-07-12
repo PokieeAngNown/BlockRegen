@@ -1,9 +1,9 @@
-##You must keep the last material is Bedrock
 ##Plugin will detect and record the first material location to regen
 ##The detection will being only once
 ##When the json file has been created in data folder
 ##Keep the list and don't change it
 ##Otherwise it will cause bugs
+##Don't use the [Big Amount Block] like stone, dirt...
 Ore1:
   ##Type material name
   ##You can find material name in here https://mcutils.com/item-ids
