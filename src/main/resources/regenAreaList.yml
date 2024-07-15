@@ -1,11 +1,11 @@
 Area1:
-  ##Type world name
+  ##世界名称
   World: world
-  ##Type first location like [X,Y,Z]
+  ##第一个坐标 格式[X,Y,Z]
   Loc1: [1,1,1]
-  ##Type second location like [X,Y,Z]
+  ##第二个坐标 格式[X,Y,Z]
   Loc2: [10,10,10]
-  ##Type the ore you need to regen
+  ##输入你的自定义矿石
   RegenOre:
     - Ore1
     - Ore2

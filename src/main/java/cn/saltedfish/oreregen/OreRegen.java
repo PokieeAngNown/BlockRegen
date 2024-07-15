@@ -35,7 +35,11 @@ public final class OreRegen extends JavaPlugin {
         //Initialize resource in pack
         initializeResource();
 
+
         AreaManager.writeInformation("Area1");
+
+        //TimeTask
+        TimeHandle.runTimeTask();
     }
 
     @Override
@@ -110,6 +114,4 @@ public final class OreRegen extends JavaPlugin {
     public static Plugin getPlugin(){
         return Bukkit.getPluginManager().getPlugin("OreRegen");
     }
-
-
 }

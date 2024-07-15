@@ -219,6 +219,78 @@ public class JsonFileManager {
         }
     }
 
+    public static void setTime(String areaName, String tag, Long time) {
+        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        JsonObject main;
+
+        // 尝试读取文件内容
+        try (FileReader fr = new FileReader(file)) {
+            main = JsonParser.parseReader(fr).getAsJsonObject();
+        } catch (IOException | IllegalStateException e) {
+            // 如果文件读取失败或者内容为空，创建一个新的 JsonObject
+            main = new JsonObject();
+        }
+
+        // 获取或创建 tag 节点
+        JsonObject setting = main.has(tag) ? main.getAsJsonObject(tag) : new JsonObject();
+        setting.addProperty("Time", time);
+        main.add(tag, setting);
+
+        // 写回文件
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(main.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static long getTime(String areaName, String tag) {
+        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        JsonParser parser = new JsonParser();
+        try (FileReader fr = new FileReader(file)){
+            JsonObject main = parser.parse(fr).getAsJsonObject();
+            return main.get(tag).getAsJsonObject().get("Time").getAsLong();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setInTimer(String areaName, String tag, boolean b) {
+        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        JsonObject main;
+
+        // 尝试读取文件内容
+        try (FileReader fr = new FileReader(file)) {
+            main = JsonParser.parseReader(fr).getAsJsonObject();
+        } catch (IOException | IllegalStateException e) {
+            // 如果文件读取失败或者内容为空，创建一个新的 JsonObject
+            main = new JsonObject();
+        }
+
+        // 获取或创建 tag 节点
+        JsonObject setting = main.has(tag) ? main.getAsJsonObject(tag) : new JsonObject();
+        setting.addProperty("InTimer", b);
+        main.add(tag, setting);
+
+        // 写回文件
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(main.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean getInTimer(String areaName, String tag) {
+        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        JsonParser parser = new JsonParser();
+        try (FileReader fr = new FileReader(file)){
+            JsonObject main = parser.parse(fr).getAsJsonObject();
+            return main.get(tag).getAsJsonObject().get("InTimer").getAsBoolean();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void clearAndSortJson(String areaName, String tag) {
         File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();

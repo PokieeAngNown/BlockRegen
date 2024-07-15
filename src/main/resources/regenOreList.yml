@@ -1,12 +1,11 @@
-##Plugin will detect and record the first material location to regen
-##The detection will being only once
-##When the json file has been created in data folder
-##Keep the list and don't change it
-##Otherwise it will cause bugs
-##Don't use the [Big Amount Block] like stone, dirt...
+##插件会检测Material列表的第一个方块并记录相关数据
+##当data文件夹内json文件创建好后 区域内所调用的矿石请不要更改 可能会引起错误
+##实在要更改请删除data文件夹内调用了相关矿石的区域文件
+##Material列表的第一个方块请不要使用区域内大量出现的方块
+##会给服务器带来不必要的压力
 Ore1:
-  ##Type material name
-  ##You can find material name in here https://mcutils.com/item-ids
+  ##输入方块的ID
+  ##你可以在网站上找到ID https://mcutils.com/item-ids
   Material:
     - iron_ore
     - stone

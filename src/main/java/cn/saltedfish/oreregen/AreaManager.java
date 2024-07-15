@@ -114,6 +114,8 @@ public class AreaManager {
                             JsonFileManager.setLocation(areaName, String.valueOf(a), new Location(world, x, y, z));
                             JsonFileManager.setMaterial(areaName, String.valueOf(a), material);
                             JsonFileManager.setMaterialList(areaName, String.valueOf(a), materialList);
+                            JsonFileManager.setTime(areaName, String.valueOf(a), 0L);
+                            JsonFileManager.setInTimer(areaName, String.valueOf(a), false);
                             a++;
                         }
                     }

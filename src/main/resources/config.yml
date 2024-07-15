@@ -1,15 +1,20 @@
-## [Time Setting]
-##When ore turn into bedrock
-##The time will start count
-##After time goes by
-##The ore will be regen in first material
-##Unit: second
-##Min: 1s
-##Don't set time too small
-##It will consume your server's memory
+##[时间设置]
+##当方块不在列表第一个时
+##插件就会开启倒计时
+##当倒计时结束 方块会重新生成为列表的第一个
+##
+##单位：秒
+## 20时间刻=1秒
+##最低不超过0.05s
 
-##The last ore in list regen time
+
+##插件注册服务器检测时间
+##每个DetectTime会检测一次json文件
+##不要设置低于0.5s
+##这会消耗你的服务器内存与算力
+DetectTime: 1
+##当方块为列表的最后一个时 应该得到的倒计时
 DeepOreRegenTime: 10
-##The ore in list beside the first one regen time
-##This setting ensures that the area is not entirely filled with ore in middle of ist
+##当方块为列表的中间部分时 应该得到的倒计时
+##这个设置确保了不会出现一片区域全是列表中间部分的方块
 MiddleOreRegenTime: 30
