@@ -1,6 +1,6 @@
-package cn.saltedfish.oreregen.Data;
+package cn.saltedfish.blockregen.Data;
 
-import cn.saltedfish.oreregen.OreRegen;
+import cn.saltedfish.blockregen.BlockRegen;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class JsonFileManager {
 
     public static Integer getTagAmount(String areaName){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         if(!file.exists()){
             return 0;
         }
@@ -45,8 +45,8 @@ public class JsonFileManager {
         }
     }
 
-    public static void setRegenOreType(String areaName, String tag, String oreName) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+    public static void setRegenBlockType(String areaName, String tag, String oreName) {
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -70,8 +70,8 @@ public class JsonFileManager {
         }
     }
 
-    public static String getRegenOreType(String areaName, String tag){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+    public static String getRegenBlockType(String areaName, String tag){
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         try (FileReader fr = new FileReader(file)){
             JsonObject main = parser.parse(fr).getAsJsonObject();
@@ -82,7 +82,7 @@ public class JsonFileManager {
     }
 
     public static void setLocation(String areaName, String tag, @NotNull Location location) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -111,7 +111,7 @@ public class JsonFileManager {
 
     @Contract("_, _ -> new")
     public static @NotNull Location getLocation(String areaName, String tag){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         String worldName;
         World world;
@@ -135,7 +135,7 @@ public class JsonFileManager {
     }
 
     public static void setMaterial(String areaName, String tag, @NotNull Material material) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -160,7 +160,7 @@ public class JsonFileManager {
     }
 
     public static Material getMaterial(String areaName, String tag){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         String materialName;
         try (FileReader fr = new FileReader(file)){
@@ -173,7 +173,7 @@ public class JsonFileManager {
     }
 
     public static void setMaterialList(String areaName, String tag, @NotNull List<Material> materialList) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -202,7 +202,7 @@ public class JsonFileManager {
     }
 
     public static List<Material> getMaterialList(String areaName, String tag){
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         String materialName;
         List<Material> materialList = new ArrayList<>();
@@ -220,7 +220,7 @@ public class JsonFileManager {
     }
 
     public static void setTime(String areaName, String tag, Long time) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -245,7 +245,7 @@ public class JsonFileManager {
     }
 
     public static long getTime(String areaName, String tag) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         try (FileReader fr = new FileReader(file)){
             JsonObject main = parser.parse(fr).getAsJsonObject();
@@ -256,7 +256,7 @@ public class JsonFileManager {
     }
 
     public static void setInTimer(String areaName, String tag, boolean b) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         // 尝试读取文件内容
@@ -281,7 +281,7 @@ public class JsonFileManager {
     }
 
     public static boolean getInTimer(String areaName, String tag) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         try (FileReader fr = new FileReader(file)){
             JsonObject main = parser.parse(fr).getAsJsonObject();
@@ -292,7 +292,7 @@ public class JsonFileManager {
     }
 
     public static void clearAndSortJson(String areaName, String tag) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonParser parser = new JsonParser();
         JsonObject main;
 
@@ -317,7 +317,7 @@ public class JsonFileManager {
 
     public static void sortAndWriteToJson(String areaName, @NotNull JsonObject main) {
         // 使用TreeMap按照 "0123" 的顺序排序
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         TreeMap<String, JsonElement> sorted = new TreeMap<>(Comparator.comparingInt(Integer::parseInt));
         main.entrySet().stream()
                 .filter(entry -> entry.getKey().matches("\\d+")) // 过滤出数字字符串的键
@@ -352,7 +352,7 @@ public class JsonFileManager {
     }
 
     public static JsonObject getMainJsonObject(String areaName) {
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
         JsonObject main;
 
         try (FileReader fr = new FileReader(file)) {

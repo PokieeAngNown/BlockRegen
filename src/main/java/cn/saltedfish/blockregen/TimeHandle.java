@@ -1,6 +1,6 @@
-package cn.saltedfish.oreregen;
+package cn.saltedfish.blockregen;
 
-import cn.saltedfish.oreregen.Data.JsonFileManager;
+import cn.saltedfish.blockregen.Data.JsonFileManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class TimeHandle {
 
-    public static final long DeepOreRegenTime = OreRegen.getPlugin().getConfig().getLong("DeepOreRegenTime");
-    public static final long MiddleOreRegenTime = OreRegen.getPlugin().getConfig().getLong("MiddleOreRegenTime");
-    private static final int DetectTime = OreRegen.getPlugin().getConfig().getInt("DetectTime");
+    public static final long DeepOreRegenTime = BlockRegen.getPlugin().getConfig().getLong("DeepOreRegenTime");
+    public static final long MiddleOreRegenTime = BlockRegen.getPlugin().getConfig().getLong("MiddleOreRegenTime");
+    private static final int DetectTime = BlockRegen.getPlugin().getConfig().getInt("DetectTime");
 
     public static void runTimeTask(){
 
@@ -49,6 +49,6 @@ public class TimeHandle {
                     }
                 }
             }
-        }.runTaskTimer(OreRegen.getPlugin(), DetectTime * 20L, DetectTime * 20L);
+        }.runTaskTimer(BlockRegen.getPlugin(), DetectTime * 20L, DetectTime * 20L);
     }
 }

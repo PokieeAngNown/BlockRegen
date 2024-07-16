@@ -1,6 +1,6 @@
-package cn.saltedfish.oreregen;
+package cn.saltedfish.blockregen;
 
-import cn.saltedfish.oreregen.Data.JsonFileManager;
+import cn.saltedfish.blockregen.Data.JsonFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class AreaManager {
 
-    private static final File regenAreaListFile = new File(OreRegen.getPlugin().getDataFolder(), "regenAreaList.yml");
+    private static final File regenAreaListFile = new File(BlockRegen.getPlugin().getDataFolder(), "regenAreaList.yml");
     public static File getRegenAreaListFile() {
         return regenAreaListFile;
     }
@@ -54,7 +54,7 @@ public class AreaManager {
         return new Location(Bukkit.getWorld(worldName), Double.parseDouble(locations.get(0)), Double.parseDouble(locations.get(1)), Double.parseDouble(locations.get(2)));
     }
 
-    public static @NotNull List<String> getAreaRegenOreList(String areaName){
+    public static @NotNull List<String> getAreaRegenBlockList(String areaName){
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
         return cfg.getStringList(areaName + ".RegenOre");
     }
@@ -66,7 +66,7 @@ public class AreaManager {
         cfg.set(areaName + ".Loc2", loc2);
     }
 
-    public static void addRegenOre(String areaName, String oreName){
+    public static void addRegenBlock(String areaName, String oreName){
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
         List<String> regenOreList = cfg.getStringList(areaName + ".RegenOre");
         regenOreList.add(oreName);
@@ -75,7 +75,7 @@ public class AreaManager {
 
     public static void writeInformation(String areaName){
 
-        File file = new File(OreRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data", areaName + ".json");
 
         Location loc1 = getAreaLoc1(areaName);
         Location loc2 = getAreaLoc2(areaName);
@@ -96,8 +96,8 @@ public class AreaManager {
         for (int x = minX; x <= maxX; x++){
             for (int y = minY; y <= maxY; y++){
                 for (int z = minZ; z <= maxZ; z++){
-                    for (int i = 0; i < getAreaRegenOreList(areaName).size(); i++) {
-                        if (OreManager.getOreMaterialList(getAreaRegenOreList(areaName).get(i)).get(0) == world.getBlockAt(x, y, z).getType()){
+                    for (int i = 0; i < getAreaRegenBlockList(areaName).size(); i++) {
+                        if (BlockManager.getBlockMaterialList(getAreaRegenBlockList(areaName).get(i)).get(0) == world.getBlockAt(x, y, z).getType()){
 
                             if (!file.exists()){
                                 try {
@@ -108,9 +108,9 @@ public class AreaManager {
                             }
 
                             material = world.getBlockAt(x, y, z).getType();
-                            materialList = OreManager.getOreMaterialList(getAreaRegenOreList(areaName).get(i));
+                            materialList = BlockManager.getBlockMaterialList(getAreaRegenBlockList(areaName).get(i));
 
-                            JsonFileManager.setRegenOreType(areaName, String.valueOf(a), getAreaRegenOreList(areaName).get(i));
+                            JsonFileManager.setRegenBlockType(areaName, String.valueOf(a), getAreaRegenBlockList(areaName).get(i));
                             JsonFileManager.setLocation(areaName, String.valueOf(a), new Location(world, x, y, z));
                             JsonFileManager.setMaterial(areaName, String.valueOf(a), material);
                             JsonFileManager.setMaterialList(areaName, String.valueOf(a), materialList);

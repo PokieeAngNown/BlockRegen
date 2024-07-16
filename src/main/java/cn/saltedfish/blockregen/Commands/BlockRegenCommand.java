@@ -1,6 +1,6 @@
-package cn.saltedfish.oreregen.Commands;
+package cn.saltedfish.blockregen.Commands;
 
-import cn.saltedfish.oreregen.OreRegen;
+import cn.saltedfish.blockregen.BlockRegen;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,18 +14,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OreRegenCommand implements CommandExecutor, TabCompleter {
+public class BlockRegenCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         switch (args[0]){
             case "reload": {
-                OreRegen.isReload = true;
-                Bukkit.getPluginManager().disablePlugin(OreRegen.getPlugin());
-                Bukkit.getPluginManager().enablePlugin(OreRegen.getPlugin());
+                BlockRegen.isReload = true;
+                Bukkit.getPluginManager().disablePlugin(BlockRegen.getPlugin());
+                Bukkit.getPluginManager().enablePlugin(BlockRegen.getPlugin());
                 if (commandSender instanceof Player) {
                     Player player = (Player) commandSender;
                     player.sendMessage("Reload complete");
                 }
+            }
+            case "area": {
+
             }
         }
         return false;
@@ -35,7 +38,14 @@ public class OreRegenCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 1){
-            return Arrays.asList("reload");
+            return Arrays.asList("reload", "area");
+        }
+        if (args.length == 2){
+            switch (args[0]){
+                case "area": {
+                    return null;
+                }
+            }
         }
         return new ArrayList<>();
     }

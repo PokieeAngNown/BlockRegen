@@ -14,7 +14,7 @@
 ##这会消耗你的服务器内存与算力
 DetectTime: 1
 ##当方块为列表的最后一个时 应该得到的倒计时
-DeepOreRegenTime: 10
+DeepBlockRegenTime: 10
 ##当方块为列表的中间部分时 应该得到的倒计时
 ##这个设置确保了不会出现一片区域全是列表中间部分的方块
-MiddleOreRegenTime: 30
+MiddleBlockRegenTime: 30

@@ -1,10 +1,10 @@
-name: OreRegen
+name: BlockRegen
 version: '${project.version}'
-main: cn.saltedfish.oreregen.OreRegen
+main: cn.saltedfish.oreregen.BlockRegen
 api-version: '1.20'
-description: This plugin allows for the regeneration of ore after it has been mined.
+description: This plugin allows for the regeneration of block after it has been mined.
 authors: [Pokiee]
-website: https://github.com/PokieeAngNown/OreRegen
+website: https://github.com/PokieeAngNown/BlockRegen
 commands:
-  oreregen:
+  blockregen:
     description: Main command in this plugin.
