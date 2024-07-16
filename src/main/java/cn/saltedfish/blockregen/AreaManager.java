@@ -56,7 +56,7 @@ public class AreaManager {
 
     public static @NotNull List<String> getAreaRegenBlockList(String areaName){
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
-        return cfg.getStringList(areaName + ".RegenOre");
+        return cfg.getStringList(areaName + ".RegenBlock");
     }
 
     public static void setArea(String areaName,World world, Location loc1, Location loc2){
@@ -68,9 +68,9 @@ public class AreaManager {
 
     public static void addRegenBlock(String areaName, String oreName){
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
-        List<String> regenOreList = cfg.getStringList(areaName + ".RegenOre");
+        List<String> regenOreList = cfg.getStringList(areaName + ".RegenBlock");
         regenOreList.add(oreName);
-        cfg.set(areaName + ".RegenOre", regenOreList);
+        cfg.set(areaName + ".RegenBlock", regenOreList);
     }
 
     public static void writeInformation(String areaName){
@@ -119,6 +119,20 @@ public class AreaManager {
                             a++;
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public static void initializeJsonFile() {
+        for (String areaName : AreaManager.getRegenAreaList()) {
+            for (int j = 0; j < JsonFileManager.getTagAmount(areaName); j++) {
+                Material jsonMaterial = JsonFileManager.getMaterial(areaName, String.valueOf(j));
+                List<Material> jsonMaterialList = JsonFileManager.getMaterialList(areaName, String.valueOf(j));
+                if (jsonMaterialList.indexOf(jsonMaterial) != 0) {
+                    JsonFileManager.setMaterial(areaName, String.valueOf(j), jsonMaterialList.get(0));
+                    JsonFileManager.setTime(areaName, String.valueOf(j), 0L);
+                    JsonFileManager.setInTimer(areaName, String.valueOf(j), false);
                 }
             }
         }

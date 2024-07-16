@@ -1,0 +1,17 @@
+##这个语言文件是中文[zh-CN]
+##This language file is Chinese[zh-CN]
+
+##语言文件内暂不支持papi变量
+##你看到的变量是插件自检测变量 不属于papi变量的范畴
+
+##语言文件支持分行书写 类似于\n换行
+InvalidCommand: "§f错误的指令"
+##InvalidCommand:
+##  - "-----"
+##  - "错误的指令"
+##  - "------"
+
+Reload: "§f插件重置成功"
+Area:
+  Create: "§b$AreaName §f区域创建成功"
+  Detect: "§b$AreaName §f区域检测成功 已为你创建区域数据"
