@@ -10,8 +10,8 @@ import java.util.List;
 
 public class TimeHandle {
 
-    public static final long DeepOreRegenTime = BlockRegen.getPlugin().getConfig().getLong("DeepOreRegenTime");
-    public static final long MiddleOreRegenTime = BlockRegen.getPlugin().getConfig().getLong("MiddleOreRegenTime");
+    public static final long DeepBlockRegenTime = BlockRegen.getPlugin().getConfig().getLong("DeepBlockRegenTime");
+    public static final long MiddleBlockRegenTime = BlockRegen.getPlugin().getConfig().getLong("MiddleBlockRegenTime");
     private static final int DetectTime = BlockRegen.getPlugin().getConfig().getInt("DetectTime");
 
     public static void runTimeTask(){
@@ -28,10 +28,10 @@ public class TimeHandle {
                             int index = jsonMaterialList.indexOf(jsonMaterial) + 1;
                             boolean b = JsonFileManager.getInTimer(areaName, String.valueOf(j));
                             if (index != 1 && index < jsonMaterialList.size() && jsonTime == 0 && b) {
-                                JsonFileManager.setTime(areaName, String.valueOf(j), TimeHandle.MiddleOreRegenTime);
+                                JsonFileManager.setTime(areaName, String.valueOf(j), TimeHandle.MiddleBlockRegenTime);
                                 JsonFileManager.setInTimer(areaName, String.valueOf(j), false);
-                            } else if (index == jsonMaterialList.size() &&jsonTime > TimeHandle.DeepOreRegenTime) {
-                                JsonFileManager.setTime(areaName, String.valueOf(j), TimeHandle.DeepOreRegenTime);
+                            } else if (index == jsonMaterialList.size() && jsonTime > TimeHandle.DeepBlockRegenTime) {
+                                JsonFileManager.setTime(areaName, String.valueOf(j), TimeHandle.DeepBlockRegenTime);
                                 JsonFileManager.setInTimer(areaName, String.valueOf(j), false);
                             }
                             jsonTime = JsonFileManager.getTime(areaName, String.valueOf(j));

@@ -5,7 +5,7 @@ Area1:
   Loc1: [1,1,1]
   ##第二个坐标 格式[X,Y,Z]
   Loc2: [10,10,10]
-  ##输入你的自定义矿石
-  RegenOre:
+  ##输入你的自定义方块 你可以在regenBlockList.yml找到它
+  RegenBlock:
     - Ore1
     - Ore2
