@@ -60,17 +60,76 @@ public class AreaManager {
     }
 
     public static void setArea(String areaName,World world, Location loc1, Location loc2){
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
-        cfg.set(areaName + ".World", world);
-        cfg.set(areaName + ".Loc1", loc1);
-        cfg.set(areaName + ".Loc2", loc2);
+        try {
+            File jsonFIle = new File(BlockRegen.getPlugin().getDataFolder() + "/data/", areaName + ".json");
+            if (!jsonFIle.exists()) {
+                jsonFIle.createNewFile();
+            }
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
+            List<Integer> loc1s = new ArrayList<>();
+            loc1s.add(loc1.getBlockX());
+            loc1s.add(loc1.getBlockY());
+            loc1s.add(loc1.getBlockZ());
+            List<Integer> loc2s = new ArrayList<>();
+            loc2s.add(loc2.getBlockX());
+            loc2s.add(loc2.getBlockY());
+            loc2s.add(loc2.getBlockZ());
+            cfg.set(areaName + ".World", world.getName());
+            cfg.set(areaName + ".Loc1", loc1s);
+            cfg.set(areaName + ".Loc2", loc2s);
+            cfg.save(getRegenAreaListFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void addRegenBlock(String areaName, String oreName){
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
-        List<String> regenOreList = cfg.getStringList(areaName + ".RegenBlock");
-        regenOreList.add(oreName);
-        cfg.set(areaName + ".RegenBlock", regenOreList);
+    public static void removeArea(String areaName) {
+        try {
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
+            cfg.set(areaName, null);
+            File jsonFIle = new File(BlockRegen.getPlugin().getDataFolder() + "/data/", areaName + ".json");
+            if (jsonFIle.exists()) {
+                jsonFIle.delete();
+            }
+            cfg.save(getRegenAreaListFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void addRegenBlock(String areaName, String blockName) {
+        try {
+            File jsonFIle = new File(BlockRegen.getPlugin().getDataFolder() + "/data/", areaName + ".json");
+            if (!jsonFIle.exists()) {
+                jsonFIle.createNewFile();
+            }
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
+            List<String> regenBlockList = cfg.getStringList(areaName + ".RegenBlock");
+            regenBlockList.add(blockName);
+            cfg.set(areaName + ".RegenBlock", regenBlockList);
+            cfg.save(getRegenAreaListFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removeRegenBlock(String areaName, String blockName) {
+        try {
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenAreaListFile());
+            List<String> regenBlockList = cfg.getStringList(areaName + ".RegenBlock");
+            regenBlockList.remove(blockName);
+            cfg.set(areaName + ".RegenBlock", regenBlockList);
+            File jsonFIle = new File(BlockRegen.getPlugin().getDataFolder() + "/data/", areaName + ".json");
+
+            if (jsonFIle.exists()) {
+                jsonFIle.delete();
+                jsonFIle.createNewFile();
+                writeInformation(areaName);
+            }
+            cfg.save(getRegenAreaListFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void writeInformation(String areaName){
@@ -125,14 +184,20 @@ public class AreaManager {
     }
 
     public static void initializeJsonFile() {
-        for (String areaName : AreaManager.getRegenAreaList()) {
-            for (int j = 0; j < JsonFileManager.getTagAmount(areaName); j++) {
-                Material jsonMaterial = JsonFileManager.getMaterial(areaName, String.valueOf(j));
-                List<Material> jsonMaterialList = JsonFileManager.getMaterialList(areaName, String.valueOf(j));
-                if (jsonMaterialList.indexOf(jsonMaterial) != 0) {
-                    JsonFileManager.setMaterial(areaName, String.valueOf(j), jsonMaterialList.get(0));
-                    JsonFileManager.setTime(areaName, String.valueOf(j), 0L);
-                    JsonFileManager.setInTimer(areaName, String.valueOf(j), false);
+        File file = new File(BlockRegen.getPlugin().getDataFolder() + "/data/");
+        if (file.isDirectory()) {
+            String[] files = file.list();
+            if (files != null && files.length > 0) {
+                for (String areaName : AreaManager.getRegenAreaList()) {
+                    for (int j = 0; j < JsonFileManager.getTagAmount(areaName); j++) {
+                        Material jsonMaterial = JsonFileManager.getMaterial(areaName, String.valueOf(j));
+                        List<Material> jsonMaterialList = JsonFileManager.getMaterialList(areaName, String.valueOf(j));
+                        if (jsonMaterialList.indexOf(jsonMaterial) != 0) {
+                            JsonFileManager.setMaterial(areaName, String.valueOf(j), jsonMaterialList.get(0));
+                            JsonFileManager.setTime(areaName, String.valueOf(j), 0L);
+                            JsonFileManager.setInTimer(areaName, String.valueOf(j), false);
+                        }
+                    }
                 }
             }
         }

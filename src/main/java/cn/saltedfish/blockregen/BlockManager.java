@@ -18,7 +18,7 @@ public class BlockManager {
         return regenBlockListFile;
     }
 
-    public List<String> getBlockList() {
+    public static @NotNull List<String> getBlockList() {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(getRegenBlockListFile());
         Set<String> keys = cfg.getKeys(false);
         return new ArrayList<>(keys);

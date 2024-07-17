@@ -4,6 +4,7 @@
 ##语言文件内暂不支持papi变量
 ##你看到的变量是插件自检测变量 不属于papi变量的范畴
 
+##语言文件支持&和§颜色符号
 ##语言文件支持分行书写 类似于\n换行
 InvalidCommand: "§f错误的指令"
 ##InvalidCommand:
@@ -14,4 +15,7 @@ InvalidCommand: "§f错误的指令"
 Reload: "§f插件重置成功"
 Area:
   Create: "§b$AreaName §f区域创建成功"
+  Remove: "§b$AreaName §f区域删除成功"
   Detect: "§b$AreaName §f区域检测成功 已为你创建区域数据"
+  AddBlock: "§f已将 §a$BlockName §f添加进 §b$AreaName §f区域"
+  RemoveBlock: "§f已将 §a$BlockName §f移出 §b$AreaName §f区域"

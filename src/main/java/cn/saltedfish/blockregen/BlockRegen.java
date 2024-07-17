@@ -30,7 +30,8 @@ public final class BlockRegen extends JavaPlugin {
         assert unhandledMessage != null;
         if (unhandledMessage.startsWith("[") && unhandledMessage.endsWith("]")) {
             handledMessage = unhandledMessage.substring(1, unhandledMessage.length() - 1);
-            handledMessage = handledMessage.replaceAll(",", "\n");
+            handledMessage = handledMessage.replaceAll(",", "\n").replaceAll("&", "§");
+            handledMessage = "§f[§bBlockRegen§f]" + handledMessage;
             return handledMessage;
         } else {
             return unhandledMessage;
@@ -54,10 +55,12 @@ public final class BlockRegen extends JavaPlugin {
         [Reg]
      */
     private void regCommands(){
+        Objects.requireNonNull(this.getCommand("blockregen")).setExecutor(this);
         Objects.requireNonNull(this.getCommand("blockregen")).setExecutor(new BlockRegenCommand());
     }
 
     private void regTabs(){
+        Objects.requireNonNull(this.getCommand("blockregen")).setTabCompleter(this);
         Objects.requireNonNull(this.getCommand("blockregen")).setTabCompleter(new BlockRegenCommand());
     }
 
@@ -85,26 +88,14 @@ public final class BlockRegen extends JavaPlugin {
         initializeResource();
 
         //TimeTask
-        File file = new File(this.getDataFolder() + "/data/");
-        if (file.isDirectory()) {
-            String[] files = file.list();
-            if (files != null && files.length > 0) {
-                TimeHandle.runTimeTask();
-            }
-        }
+        TimeHandle.runTimeTask();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         this.getLogger().info("Reinitializing json file...");
-        File file = new File(this.getDataFolder() + "/data/");
-        if (file.isDirectory()) {
-            String[] files = file.list();
-            if (files != null && files.length > 0) {
-                AreaManager.initializeJsonFile();
-            }
-        }
+        AreaManager.initializeJsonFile();
         this.getLogger().info(name + "plugin is disabled");
     }
 
