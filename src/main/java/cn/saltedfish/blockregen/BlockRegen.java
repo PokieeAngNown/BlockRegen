@@ -30,8 +30,7 @@ public final class BlockRegen extends JavaPlugin {
         assert unhandledMessage != null;
         if (unhandledMessage.startsWith("[") && unhandledMessage.endsWith("]")) {
             handledMessage = unhandledMessage.substring(1, unhandledMessage.length() - 1);
-            handledMessage = handledMessage.replaceAll(",", "\n").replaceAll("&", "§");
-            handledMessage = "§f[§bBlockRegen§f]" + handledMessage;
+            handledMessage = handledMessage.replaceAll(",", "§r\n").replaceAll("&", "§");
             return handledMessage;
         } else {
             return unhandledMessage;
