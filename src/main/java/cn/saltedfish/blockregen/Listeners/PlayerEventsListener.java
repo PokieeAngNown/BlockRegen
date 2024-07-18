@@ -1,17 +1,22 @@
 package cn.saltedfish.blockregen.Listeners;
 
 import cn.saltedfish.blockregen.AreaManager;
+import cn.saltedfish.blockregen.BlockManager;
 import cn.saltedfish.blockregen.Data.JsonFileManager;
+import com.google.gson.JsonObject;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static cn.saltedfish.blockregen.AreaManager.getAreaRegenBlockList;
 
 public class PlayerEventsListener implements Listener {
 
@@ -67,6 +72,40 @@ public class PlayerEventsListener implements Listener {
                     world.dropItemNaturally(location, itemStack);
                     //取消事件
                     event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerPlaceBlock(@NotNull BlockPlaceEvent event) {
+        Material material = event.getBlock().getType();
+        Location location = event.getBlock().getLocation();
+        World world = location.getWorld();
+        assert world != null;
+
+        for (String areaName : AreaManager.getRegenAreaList()) {
+            for (int j = 0; j <= JsonFileManager.getTagAmount(areaName); j++) {
+                if (!JsonFileManager.isLocationSet(areaName, location)) {
+                    for (int i = 0; i < getAreaRegenBlockList(areaName).size(); i++) {
+                        List<Material> materialList = BlockManager.getBlockMaterialList(getAreaRegenBlockList(areaName).get(i));
+
+                        int x = location.getBlockX();
+                        int y = location.getBlockY();
+                        int z = location.getBlockZ();
+                        int a = JsonFileManager.getTagAmount(areaName);
+                        if (BlockManager.getBlockMaterialList(getAreaRegenBlockList(areaName).get(i)).get(0) == material) {
+                            JsonFileManager.setRegenBlockType(areaName, String.valueOf(a), getAreaRegenBlockList(areaName).get(i));
+                            JsonFileManager.setLocation(areaName, String.valueOf(a), new Location(world, x, y, z));
+                            JsonFileManager.setMaterial(areaName, String.valueOf(a), material);
+                            JsonFileManager.setMaterialList(areaName, String.valueOf(a), materialList);
+                            JsonFileManager.setTime(areaName, String.valueOf(a), 0L);
+                            JsonFileManager.setInTimer(areaName, String.valueOf(a), false);
+
+                            JsonObject mainJsonObject = JsonFileManager.getMainJsonObject(areaName);
+                            JsonFileManager.sortAndWriteToJson(areaName, mainJsonObject);
+                        }
+                    }
                 }
             }
         }

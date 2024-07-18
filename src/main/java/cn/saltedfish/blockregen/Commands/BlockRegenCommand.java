@@ -44,12 +44,6 @@ public class BlockRegenCommand implements CommandExecutor, TabCompleter {
                 switch (args[1]) {
                     case "create": {
                         //blockregen area createArea x1 y1 z1 x2 y2 z2 areaName
-                        if (args.length != 9) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         double x1 = Double.parseDouble(args[2]);
                         double y1 = Double.parseDouble(args[3]);
                         double z1 = Double.parseDouble(args[4]);
@@ -58,150 +52,47 @@ public class BlockRegenCommand implements CommandExecutor, TabCompleter {
                         double z2 = Double.parseDouble(args[7]);
                         String areaName = args[8];
 
-                        if (AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaAlreadyExists").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         World world = player.getWorld();
                         Location loc1 = new Location(world, x1, y1, z1);
                         Location loc2 = new Location(world, x2, y2, z2);
 
                         AreaManager.setArea(areaName, world, loc1, loc2);
 
-                        message = BlockRegen.getLanguage("Area.Create").replace("%AreaName", areaName);
+                        message = BlockRegen.getLanguage("Area.Create").replace("$AreaName", areaName);
                         player.sendMessage(message);
                         break;
                     }
                     case "remove": {
                         //blockregen area remove areaName
-                        if (args.length != 3) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         String areaName = args[2];
-
-                        if (!AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaNotFound").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         AreaManager.removeArea(areaName);
-                        message = BlockRegen.getLanguage("Area.Remove").replace("%AreaName", areaName);
+                        message = BlockRegen.getLanguage("Area.Remove").replace("$AreaName", areaName);
                         player.sendMessage(message);
                         break;
                     }
                     case "detect": {
                         //blockregen area detect areaName
-                        if (args.length != 3) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         String areaName = args[2];
-
-                        if (!AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaNotFound").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         AreaManager.writeInformation(areaName);
-                        message = BlockRegen.getLanguage("Area.Detect").replace("%AreaName", areaName);
+                        message = BlockRegen.getLanguage("Area.Detect").replace("$AreaName", areaName);
                         player.sendMessage(message);
                         break;
                     }
                     case "addBlock": {
                         //blockregen area addBlock areaName blockName
-                        if (args.length != 4) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         String areaName = args[2];
                         String blockName = args[3];
-
-                        if (!AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaNotFound").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
-                        if (!BlockManager.getBlockList().contains(blockName)) {
-                            message = BlockRegen.getLanguage("Area.BlockNotFoundInServer").replaceAll("%BlockName", blockName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         AreaManager.addRegenBlock(areaName, blockName);
-                        message = BlockRegen.getLanguage("Area.AddBlock").replace("%BlockName", blockName).replace("%AreaName", blockName);
+                        message = BlockRegen.getLanguage("Area.AddBlock").replace("$BlockName", blockName).replace("$AreaName", blockName);
                         player.sendMessage(message);
                         break;
                     }
                     case "removeBlock": {
                         //blockregen area removeBlock areaName blockName
-                        if (args.length != 4) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         String areaName = args[2];
                         String blockName = args[3];
-
-                        if (!AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaNotFound").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
-                        if (!AreaManager.getAreaRegenBlockList(areaName).contains(blockName)) {
-                            message = BlockRegen.getLanguage("Area.BlockNotFoundInArea").replaceAll("%BlockName", blockName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
                         AreaManager.removeRegenBlock(areaName, blockName);
-                        message = BlockRegen.getLanguage("Area.RemoveBlock").replace("%BlockName", blockName).replace("%AreaName", areaName);
-                        player.sendMessage(message);
-                        break;
-                    }
-                    case "info": {
-                        //blockregen area info areaName
-                        if (args.length != 3) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
-                        String areaName = args[2];
-
-                        if (!AreaManager.getRegenAreaList().contains(areaName)) {
-                            message = BlockRegen.getLanguage("Area.AreaNotFound").replaceAll("%AreaName", areaName);
-                            player.sendMessage(message);
-                            return true;
-                        }
-
-                        message = AreaManager.getAreaInfo(areaName);
-                        player.sendMessage(message);
-                        break;
-                    }
-                    case "list": {
-                        //blockregen area list
-                        if (args.length != 2) {
-                            message = BlockRegen.getLanguage("InvalidCommand");
-                            player.sendMessage(message);
-                            return true;
-                        }
-
-                        List<String> areaList = AreaManager.getRegenAreaList();
-                        message = BlockRegen.getLanguage("Area.List").replaceAll("%AreaList", String.valueOf(areaList));
+                        message = BlockRegen.getLanguage("Area.RemoveBlock").replace("$BlockName", blockName).replace("$AreaName", areaName);
                         player.sendMessage(message);
                         break;
                     }
@@ -226,7 +117,7 @@ public class BlockRegenCommand implements CommandExecutor, TabCompleter {
         if ("area".equals(args[0])) {
 
             if (args.length == 2) {
-                return Arrays.asList("create", "remove", "detect", "addBlock", "removeBlock", "info", "list");
+                return Arrays.asList("create", "remove", "detect", "addBlock", "removeBlock");
             }
             if ("create".equals(args[1])) {
                 //blockregen area create x1 y1 z1 x2 y2 z2 areaName
@@ -278,25 +169,19 @@ public class BlockRegenCommand implements CommandExecutor, TabCompleter {
             if ("addBlock".equals(args[1])) {
                 //blockregen area addBlock areaName blockName
                 if (args.length == 3) {
-                    return AreaManager.getRegenAreaList();
+                    return BlockManager.getBlockList();
                 }
                 if (args.length == 4) {
-                    return BlockManager.getBlockList();
+                    return AreaManager.getRegenAreaList();
                 }
             }
             if ("removeBlock".equals(args[1])) {
                 //blockregen area removeBlock areaName blockName
                 if (args.length == 3) {
-                    return AreaManager.getRegenAreaList();
+                    return BlockManager.getBlockList();
                 }
                 if (args.length == 4) {
                     return AreaManager.getAreaRegenBlockList(args[2]);
-                }
-            }
-            if ("info".equals(args[1])) {
-                //blockregen area info areaName
-                if (args.length == 3) {
-                    return AreaManager.getRegenAreaList();
                 }
             }
         }

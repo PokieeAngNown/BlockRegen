@@ -59,35 +59,6 @@ public class AreaManager {
         return cfg.getStringList(areaName + ".RegenBlock");
     }
 
-    public static @NotNull String getAreaInfo(String areaName) {
-        World world = getAreaWorld(areaName);
-        Location loc1 = getAreaLoc1(areaName);
-        Location loc2 = getAreaLoc2(areaName);
-        int x1 = loc1.getBlockX();
-        int y1 = loc1.getBlockY();
-        int z1 = loc1.getBlockZ();
-        int x2 = loc2.getBlockX();
-        int y2 = loc2.getBlockY();
-        int z2 = loc2.getBlockZ();
-        int all = (x2 - x1) * (y2 - y1) * (z2 - z1);
-
-        String worldName = world.getName();
-        String loc1String = "[" + x1 + "," + y1 + "," + z1 + "]";
-        String loc2String = "[" + x2 + "," + y2 + "," + z2 + "]";
-        String activated = String.valueOf(JsonFileManager.getTagAmount(areaName));
-        String allString = String.valueOf(all);
-        String blockList = String.valueOf(getAreaRegenBlockList(areaName));
-
-        return BlockRegen.getLanguage("Area.Info")
-                .replaceAll("%AreaName", areaName)
-                .replaceAll("%WorldName", worldName)
-                .replaceAll("%Loc1", loc1String)
-                .replaceAll("%Loc2", loc2String)
-                .replaceAll("%Activated", activated)
-                .replaceAll("%All", allString)
-                .replaceAll("%BlockList", blockList);
-    }
-
     public static void setArea(String areaName,World world, Location loc1, Location loc2){
         try {
             File jsonFIle = new File(BlockRegen.getPlugin().getDataFolder() + "/data/", areaName + ".json");
